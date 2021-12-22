@@ -5,8 +5,8 @@ import React, {
   useState
 } from "react";
 
-/* const { CLIENT_ID } = process.env;
-const { REDIRECT_URI } = process.env; */
+const {CLIENT_ID}=process.env;
+const {REDIRECT_URI}=process.env;
 
   import * as AuthSession from 'expo-auth-session';
 
@@ -42,8 +42,6 @@ function AuthProvider ({ children } : AuthProviderProps){
   //Centralizar a autenticação aqui e compartihar em outro local da aplicação
   async function signInWithGoogle(){
     try{
-      const CLIENT_ID='1034865090835-mgtqmf1esl2diokmk9j2i193f98mopmq.apps.googleusercontent.com';
-      const REDIRECT_URI='https://auth.expo.io/@tayse_rosa/gofinances';
       const RESPONSE_TYPE='token';
       const SCOPE=encodeURI('profile email');
 
