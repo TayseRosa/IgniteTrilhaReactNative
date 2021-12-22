@@ -44,6 +44,8 @@
   - [Quando usar try catch](#quando-usar-try-catch)
   - [Tratando dados sensíveis](#tratando-dados-sensíveis)
   - [Ferramenta para gerar iniciais do nome(avatar) automaticamente](#ferramenta-para-gerar-iniciais-do-nomeavatar-automaticamente)
+  - [Publicação](#publicação)
+    - [](#)
 - [🚀 Tecnologias utilizadas neste projeto](#-tecnologias-utilizadas-neste-projeto)
 - [📥 Como usar](#-como-usar)
 - [🚀 Developer](#-developer)
@@ -776,6 +778,13 @@ const { REDIRECT_URI } = process.env;
 ```js
 https://ui-avatars.com/api?name=${name}
 ```
+
+## Publicação 
+
+ ### 
+ - [x] Google Play Console: https://play.google.com/console/developers
+ - [x] Templates: https://www.figma.com/file/lHVWTkBV06WLHZzVsI2oq5/App-Screenshots---MySkill?node-id=0%3A1
+ - [x] Icons: https://www.figma.com/file/e2keY5CM51mqIA3ao6XB2z/App-Icons_Splash---MySkill?node-id=0%3A1
 
 # 🚀 Tecnologias utilizadas neste projeto
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
