@@ -15,7 +15,7 @@ import { SignIn } from './src/screens/SignIn';
 
 //Importação do Context
 //import { AuthContext } from './src/AuthContext';
-import { AuthProvider } from './src/hooks/auth';
+import { AuthProvider, useAuth } from './src/hooks/auth';
 
 import {
   useFonts,
@@ -27,13 +27,16 @@ import AppLoading from 'expo-app-loading';
 
 
 export default function App() {
+
   const [ fontsLoaded ] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
     Poppins_700Bold
   });
 
-  if(!fontsLoaded) {
+  const { userStorageLoading } = useAuth();
+
+  if(!fontsLoaded || userStorageLoading) {
     //Tela de Splash (a tela que aparece enquanto o app é carregado)
     return <AppLoading />
   }

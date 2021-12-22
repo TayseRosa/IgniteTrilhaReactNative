@@ -43,6 +43,7 @@
     - [Configurando credenciais](#configurando-credenciais)
   - [Quando usar try catch](#quando-usar-try-catch)
   - [Tratando dados sensíveis](#tratando-dados-sensíveis)
+  - [Ferramenta para gerar iniciais do nome(avatar) automaticamente](#ferramenta-para-gerar-iniciais-do-nomeavatar-automaticamente)
 - [🚀 Tecnologias utilizadas neste projeto](#-tecnologias-utilizadas-neste-projeto)
 - [📥 Como usar](#-como-usar)
 - [🚀 Developer](#-developer)
@@ -770,6 +771,11 @@ const { CLIENT_ID } = process.env;
 const { REDIRECT_URI } = process.env;
 ```
 - [x] no arquivo gitignore adicionar o .env
+
+## Ferramenta para gerar iniciais do nome(avatar) automaticamente
+```js
+https://ui-avatars.com/api?name=${name}
+```
 
 # 🚀 Tecnologias utilizadas neste projeto
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
