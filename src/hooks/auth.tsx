@@ -4,8 +4,8 @@ import React, {
   useContext
 } from "react";
 
-const { CLIENT_ID } = process.env;
-const { REDIRECT_URI } = process.env;
+/* const { CLIENT_ID } = process.env;
+const { REDIRECT_URI } = process.env; */
 
 import * as AuthSession from 'expo-auth-session';
 
@@ -41,24 +41,18 @@ function AuthProvider ({ children } : AuthProviderProps){
     email:'developer@tayserosa.dev'
   };
 
-  //Centralizar a autenticação aqui
+  //Centralizar a autenticação aqui e compartihar em outro local da aplicação
   async function signInWithGoogle(){
     try {
+      const CLIENT_ID = '1034865090835-mgtqmf1esl2diokmk9j2i193f98mopmq.apps.googleusercontent.com';
+      const REDIRECT_URI = 'https://auth.expo.io/@tayse_rosa/gofinances';
       const RESPONSE_TYPE = 'token';
       const SCOPE = encodeURI('profile email');
 
-      const authURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
-      const { type, params } =  await AuthSession
-      .startAsync({ authURL }) as AuthorizationResponse;
-
-      if(type === 'success') {
-        const response = await fetch( `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}` );
-        const userInfo = await response.json();
-        
-        console.log(userInfo);
-      }
-      
+      const response =  await AuthSession.startAsync({ authUrl });
+      console.log(response);     
 
     }catch(error){
       //Tratar o erro no local que chamou a função

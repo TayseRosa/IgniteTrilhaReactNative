@@ -33,13 +33,6 @@ export function SignIn(){
       Alert.alert('Não foi possivel conectar a conta Google');
     }
   }
-
-  /* const data = useAuth();
-  console.log(data) */
-
-  //const { user } = useAuth();
-  //console.log(user.name);
-  
   return(
     <Container>
       <Header>
