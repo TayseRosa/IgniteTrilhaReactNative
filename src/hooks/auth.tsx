@@ -1,13 +1,14 @@
 import React, { 
   createContext, 
   ReactNode, 
-  useContext
+  useContext,
+  useState
 } from "react";
 
 /* const { CLIENT_ID } = process.env;
 const { REDIRECT_URI } = process.env; */
 
-import * as AuthSession from 'expo-auth-session';
+  import * as AuthSession from 'expo-auth-session';
 
 interface AuthProviderProps{
   children: ReactNode;
@@ -35,35 +36,44 @@ interface AuthorizationResponse {
 const AuthContext = createContext({} as IAuthContextData);
 
 function AuthProvider ({ children } : AuthProviderProps){
-  const user = {
-    id: '21313899',
-    name: 'Tayse Rosa',
-    email:'developer@tayserosa.dev'
-  };
-
+  
+  const [ user, setUser ] = useState<User>({} as User);
+  
   //Centralizar a autenticação aqui e compartihar em outro local da aplicação
   async function signInWithGoogle(){
-    try {
-      const CLIENT_ID = '1034865090835-mgtqmf1esl2diokmk9j2i193f98mopmq.apps.googleusercontent.com';
-      const REDIRECT_URI = 'https://auth.expo.io/@tayse_rosa/gofinances';
-      const RESPONSE_TYPE = 'token';
-      const SCOPE = encodeURI('profile email');
+    try{
+      const CLIENT_ID='1034865090835-mgtqmf1esl2diokmk9j2i193f98mopmq.apps.googleusercontent.com';
+      const REDIRECT_URI='https://auth.expo.io/@tayse_rosa/gofinances';
+      const RESPONSE_TYPE='token';
+      const SCOPE=encodeURI('profile email');
 
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
-      const response =  await AuthSession.startAsync({ authUrl });
-      console.log(response);     
+      const { type, params } = await AuthSession
+      .startAsync({ authUrl }) as AuthorizationResponse;
 
-    }catch(error){
-      //Tratar o erro no local que chamou a função
+      if(type === "success"){
+        const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`);
+
+        const userInfo = await response.json();
+
+        setUser({
+          id: userInfo.id,
+          email: userInfo.email,
+          name: userInfo.given_name,
+          photo: userInfo.picture
+        });
+      }
+    }catch(error){  
       throw new Error(error as string);
     }
   }
 
+
   return(
     <AuthContext.Provider value={{ 
       user, 
-      signInWithGoogle 
+      signInWithGoogle
     }}>
       { children }
     </AuthContext.Provider>   
