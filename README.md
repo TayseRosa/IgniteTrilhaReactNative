@@ -45,7 +45,12 @@
   - [Tratando dados sensíveis](#tratando-dados-sensíveis)
   - [Ferramenta para gerar iniciais do nome(avatar) automaticamente](#ferramenta-para-gerar-iniciais-do-nomeavatar-automaticamente)
   - [Publicação](#publicação)
-    - [](#)
+    - [Dicas](#dicas)
+    - [Screenshot das telas inteiras do emulador](#screenshot-das-telas-inteiras-do-emulador)
+    - [Gerando ícones do App](#gerando-ícones-do-app)
+    - [Mudar o nome da aplicação](#mudar-o-nome-da-aplicação)
+    - [Criando Splash Screen](#criando-splash-screen)
+      - [Ajustes no tempo de carregamento da Splash Screen](#ajustes-no-tempo-de-carregamento-da-splash-screen)
 - [🚀 Tecnologias utilizadas neste projeto](#-tecnologias-utilizadas-neste-projeto)
 - [📥 Como usar](#-como-usar)
 - [🚀 Developer](#-developer)
@@ -780,11 +785,189 @@ https://ui-avatars.com/api?name=${name}
 ```
 
 ## Publicação 
-
- ### 
+### Dicas
  - [x] Google Play Console: https://play.google.com/console/developers
  - [x] Templates: https://www.figma.com/file/lHVWTkBV06WLHZzVsI2oq5/App-Screenshots---MySkill?node-id=0%3A1
  - [x] Icons: https://www.figma.com/file/e2keY5CM51mqIA3ao6XB2z/App-Icons_Splash---MySkill?node-id=0%3A1
+ ### Screenshot das telas inteiras do emulador
+   - [x] Rodar a aplicação no Android Studio, e no canto inferior esquedo, clicar em logcat ou em:(View > Tool windows > LogCat) e clicar na câmera
+   - [x] Para que a barra superior não fique poluida na hora do screenshot, no dispositivo, acessar o modo desenvolvedor(habilitar) > e acessar Sistem UI demo mode habilitar/desabilitar
+### Gerando ícones do App
+  - [x] na raiz, criar uma pasta resource > salva o logo nesta pasta.
+  - [x] No Android Studio, abrir a pasta do projeto > em cima do logo do Android(com uma seta ao lado) alterar para project > vai na pasta app  e clica com o botao direito > New > Image asset e vai abrir uma janela: 
+    - [x] Em foreground Layer marcar image e fazer upload do logo > centralizar >next e finish
+### Mudar o nome da aplicação
+  - [x] pasta android > app > src > main > res > values > arquivo string.xml
+
+### Criando Splash Screen
+  - [x] Dentro da pasta android > app > src > main > res > criar uma pasta chamada drawable > com o arquivo background_splash.xml e colar este codigo 
+```js
+  <?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:drawable="@color/splashscreen_bg"/>
+
+  <item
+    android:width="300dp"
+    android:height="300dp"
+    android:drawable="@mipmap/splash_icon"
+    android:gravity="center" />
+</layer-list>
+```
+- [x] Dentro da pasta android > app > src > main > res > values > criar o arquivo colors.xml, e colar o codigo abaixo
+```js
+  <?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="splashscreen_bg">#121015</color>
+  <color name="app_bg">#121015</color>
+</resources>
+``` 
+- [x] Dentro da pasta android > app > src > main > res > values > no arquivo styles.xml, e colar o codigo abaixo
+```js
+<resources>
+  <!-- Base application theme. -->
+   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="android:textColor">#fff</item>
+
+    <!-- Add the following line to set the default status bar color for all the app. -->
+    <item name="android:statusBarColor">@color/app_bg</item>
+    <!-- Add the following line to set the default status bar text color for all the app 
+    to be a light color (false) or a dark color (true) -->
+    <item name="android:windowLightStatusBar">false</item>
+    <!-- Add the following line to set the default background color for all the app. -->
+    <item name="android:windowBackground">@color/app_bg</item>
+  </style>
+
+  <!-- Adds the splash screen definition -->
+   <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:statusBarColor">@color/splashscreen_bg</item>
+    <item name="android:background">@drawable/background_splash</item>
+  </style>
+</resources>
+```
+- [x] Dentro da pasta android > app > src > main > AndroidManifest
+OBS.: NÃO COPIE O ARQUIVO COMPLETAMENTE, APENAS ADICIONE OU REMOVA AS LINHAS SINALIZADAS
+```js
+  <resources>
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="android:textColor">#000000</item>
+
+    <!-- Add the following line to set the default status bar color for all the app. -->
+    <item name="android:statusBarColor">@color/app_bg</item>
+    <!-- Add the following line to set the default status bar text color for all the app 
+    to be a light color (false) or a dark color (true) -->
+    <item name="android:windowLightStatusBar">false</item>
+    <!-- Add the following line to set the default background color for all the app. -->
+    <item name="android:windowBackground">@color/app_bg</item>
+  </style>
+
+  <!-- Adds the splash screen definition -->
+  <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:statusBarColor">@color/splashscreen_bg</item>
+    <item name="android:background">@drawable/background_splash</item>
+  </style>
+</resources>
+```
+- [x] Dentro da pasta android > app > src > main > java[seu_pacote] > e criar o arquivo SplashActivity.java
+```js
+  package com.rn_splashscreen_tutorial; // Altere para o seu pacote
+
+  import android.content.Intent;
+  import android.os.Bundle;
+  import androidx.appcompat.app.AppCompatActivity;
+
+  public class SplashActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+
+      Intent intent = new Intent(this, MainActivity.class);
+      startActivity(intent);
+      finish();
+    }
+  }
+```
+- [x] Exportar os icones nos tamanhos 1x 2x e 3x e salvar os icons na pasta: android > app > src > main > res > e colar os icones (com o nome splash_icon) e colar conforme os tamanhos em suas pastas correspondentesmdpi, xhdpi, xxhdpi etc.. 
+- [x] Dentro da pasta android > app > src > main > res > AndroidManifest e copiar o nome do pacote por exemplo:
+```js
+  <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.gofinances">//Package="com.gofinances"
+```
+- [x] Dentro da pasta android > app > src > main > java > [seu_pacote] > SplashActivity.java colar na primeira linha:
+```js
+package com.gofinances;
+```
+#### Ajustes no tempo de carregamento da Splash Screen
+  - [x] Lib React splash screen - yarn add react-native-splash-screen
+  - [x] npx react-native link react-native-splash-screen
+  - [x] Em android > src > main > java > [seu pacote] > MainActivity.java, adicionar o @override
+OBS.: 
+
+<aside>
+💡 Não copie todo o arquivo, apenas adicione as linhas mencionadas.
+</aside>
+
+```js
+  package com.rn_splashscreen_tutorial; // Altere para o seu pacote
+
+  import com.facebook.react.ReactActivity;
+  import org.devio.rn.splashscreen.SplashScreen; // Adicione esse import
+  import android.os.Bundle; // Adicione esse import
+
+  public class MainActivity extends ReactActivity {
+      // Adicione esse método
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          SplashScreen.show(this);
+          super.onCreate(savedInstanceState);
+      }
+
+      ...
+  }
+```
+
+- [x] pasta android > app > src > main > res > e criar a pasta layout > e o arquivo launch_screen.xml e colar o codigo:
+```js
+  <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/background_splash"
+  android:orientation="vertical">
+</LinearLayout>
+```
+
+- [x] No App.tsx importar a SplashScreen
+```js
+  import React,{ useEffect } from 'react';
+  import SplashScreen from 'react-native-splash-screen'
+
+  useEffect(()=>{
+    SplashScreen.hide();
+  },[])
+
+  return ......
+
+```
+
+
+
+  - [x] pasta android > app > src > main > res > values > arquivo string.xml
+```js
+  <item name="android:windowLightStatusBar">false</item>
+```
+
+
+
+Fonte:https://www.notion.so/Splash-Screen-no-Android-8da844d39d834f28bb578e41313ae493
+
+
+
+
+
+
 
 # 🚀 Tecnologias utilizadas neste projeto
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
