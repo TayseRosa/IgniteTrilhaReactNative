@@ -953,7 +953,6 @@ OBS.:
 ```
 
 
-
   - [x] pasta android > app > src > main > res > values > arquivo string.xml
 ```js
   <item name="android:windowLightStatusBar">false</item>
